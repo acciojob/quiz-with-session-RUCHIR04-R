@@ -54,4 +54,23 @@ function renderQuestions() {
     questionsElement.appendChild(questionElement);
   }
 }
-function calculate 
+function calculate() {
+  let score = 0;
+  for (let i = 0; i < questions.length; i++) {
+    if (userAnswers[i] === questions[i].answer) {
+      score++;
+    }
+  }
+  return score;
+}
+document.getElementById("submit").addEventListener("click", () => {
+  const score = calculateScore();
+  document.getElementById("score").innerText = `Your score is ${score} out of ${questions.length}.`;
+  localStorage.setItem("score", score);
+});
+renderQuestions();
+
+const savedScore = localStorage.getItem("score");
+if (savedScore !== null) {
+  document.getElementById("score").innerText = `Your last score was ${savedScore} out of ${questions.length}.`;
+} 

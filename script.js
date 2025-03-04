@@ -51,7 +51,7 @@ function renderQuestions() {
       questionElement.appendChild(choiceText);
     }
     questionsElement.appendChild(questionElement);
-  }
+  }https://www.svgrepo.com/show/345221/three-dots.svg
 }
 function calculateScore() {
   let score = 0;

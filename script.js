@@ -29,6 +29,7 @@ const questions = [
     answer: "Ottawa",
   },
 ];
+const questionsElement = document.getElementById("questions");
 let userAnswers = JSON.parse(sessionStorage.getItem("progress")) || Array(questions.length).fill(null);
 // Display the quiz questions and choices
 function renderQuestions() {
@@ -51,24 +52,6 @@ function renderQuestions() {
       questionElement.appendChild(choiceText);
     }
     questionsElement.appendChild(questionElement);
-  }https://www.svgrepo.com/show/345221/three-dots.svg
-}
-function calculateScore() {
-  let score = 0;
-  for (let i = 0; i < questions.length; i++) {
-    if (userAnswers[i] === questions[i].answer) {
-      score++;
-    }
   }
-  return score;
 }
-document.getElementById("submit").addEventListener("click", () => {
-  const score = calculateScore();
-  document.getElementById("score").innerText = `Your score is ${score} out of ${questions.length}.`;
-  localStorage.setItem("score", score);
-});
-renderQuestions();
-const savedScore = localStorage.getItem("score");
-if (savedScore !== null) {
-  document.getElementById("score").innerText = `Your last score was ${savedScore} out of ${questions.length}.`;
-}
+function calculate 

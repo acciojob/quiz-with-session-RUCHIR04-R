@@ -29,48 +29,59 @@ const questions = [
     answer: "Ottawa",
   },
 ];
+
 const questionsElement = document.getElementById("questions");
 let userAnswers = JSON.parse(sessionStorage.getItem("progress")) || Array(questions.length).fill(null);
-// Display the quiz questions and choices
+
 function renderQuestions() {
-  for (let i = 0; i < questions.length; i++) {
-    const question = questions[i];
+  questions.forEach((question, i) => {
     const questionElement = document.createElement("div");
     const questionText = document.createTextNode(question.question);
     questionElement.appendChild(questionText);
-    for (let j = 0; j < question.choices.length; j++) {
-      const choice = question.choices[j];
+
+    question.choices.forEach((choice, j) => {
       const choiceElement = document.createElement("input");
       choiceElement.setAttribute("type", "radio");
       choiceElement.setAttribute("name", `question-${i}`);
       choiceElement.setAttribute("value", choice);
+
       if (userAnswers[i] === choice) {
-        choiceElement.setAttribute("checked", true);
+        choiceElement.checked = true;
       }
-      const choiceText = document.createTextNode(choice);
+
+      choiceElement.addEventListener("change", () => {
+        userAnswers[i] = choice;
+        sessionStorage.setItem("progress", JSON.stringify(userAnswers));
+      });
+
+      const choiceText = document.createTextNode(` ${choice}`);
       questionElement.appendChild(choiceElement);
       questionElement.appendChild(choiceText);
-    }
+    });
+
     questionsElement.appendChild(questionElement);
-  }
+  });
 }
+
 function calculate() {
   let score = 0;
-  for (let i = 0; i < questions.length; i++) {
-    if (userAnswers[i] === questions[i].answer) {
+  questions.forEach((question, i) => {
+    if (userAnswers[i] === question.answer) {
       score++;
     }
-  }
+  });
   return score;
 }
+
 document.getElementById("submit").addEventListener("click", () => {
-  const score = calculateScore();
+  const score = calculate();
   document.getElementById("score").innerText = `Your score is ${score} out of ${questions.length}.`;
   localStorage.setItem("score", score);
 });
+
 renderQuestions();
 
 const savedScore = localStorage.getItem("score");
 if (savedScore !== null) {
   document.getElementById("score").innerText = `Your last score was ${savedScore} out of ${questions.length}.`;
-} 
+}

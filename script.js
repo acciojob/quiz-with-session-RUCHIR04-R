@@ -48,7 +48,6 @@ function renderQuestions() {
       if (userAnswers[i] === choice) {
         choiceElement.checked = true;
       }
-
       choiceElement.addEventListener("change", () => {
         userAnswers[i] = choice;
         sessionStorage.setItem("progress", JSON.stringify(userAnswers));
@@ -73,6 +72,7 @@ function calculate() {
   return score;
 }
 
+
 document.getElementById("submit").addEventListener("click", () => {
   const score = calculate();
   document.getElementById("score").innerText = `Your score is ${score} out of ${questions.length}.`;
@@ -80,6 +80,7 @@ document.getElementById("submit").addEventListener("click", () => {
 });
 
 renderQuestions();
+
 
 const savedScore = localStorage.getItem("score");
 if (savedScore !== null) {
